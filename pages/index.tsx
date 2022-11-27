@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <h1 className="text-3xl font-bold underline text-orange-900">
+        <h1 data-testId='test1' className="text-3xl font-bold underline text-orange-900">
           Welcome to  next js
         </h1>
       </main>
