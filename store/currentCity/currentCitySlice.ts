@@ -2,35 +2,31 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit';
+import { ICityData } from '../../components/molecules/CityData/types';
 import { RootState } from '../store';
 
-export type CityState = {
-  city: string;
-  lat: number;
-  lon: number;
+export type CurrentCityInfoState = {
+  currentCity: {info: ICityData; date: number}[];
 };
 
-const initialState: CityState = {
-  city: 'New York',
-  lat: 40.7128,
-  lon: -74.006,
-};
+const initialState: CurrentCityInfoState = 
+  {
+    currentCity: [],
+  }
 
-export const currentCitySlice = createSlice({
+export const currentCityInfoSlice = createSlice({
   name: 'changeCurrentCity',
   initialState,
   reducers: {
-    changeCity: (state, action: PayloadAction<CityState>) => {
-      state.city = action.payload.city;
-      state.lat = action.payload.lat;
-      state.lon = action.payload.lon;
+    changeCityInfo: (state, action: PayloadAction<CurrentCityInfoState>) => {
+      state.currentCity = action.payload.currentCity;
     },
   },
 });
 export const {
-  changeCity
-} = currentCitySlice.actions;
+  changeCityInfo: changeCity
+} = currentCityInfoSlice.actions;
 
 export const selectCurrentCity = (state: RootState) => state.currentCity;
 
-export default currentCitySlice.reducer;
+export default currentCityInfoSlice.reducer;

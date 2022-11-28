@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAppSelector } from "../../../hooks";
 import { selectCurrentDate } from "../../../store/currentDate/currentDateSlice";
@@ -5,7 +6,10 @@ import { CITIES } from "../../../utils/cities";
 import Tab from "../../atoms/Tab";
 
 const CitiesTab: React.FC = () => {
-  const [currentCity, setCurrentCity] = useState(CITIES[0]); //TODO: do this from query
+  const router = useRouter();
+  const [currentCity, setCurrentCity] = useState(
+    CITIES.find((city) => city.query === router.query.city)
+  );
   const currentDate = useAppSelector(selectCurrentDate);
 
   return (

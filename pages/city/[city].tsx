@@ -1,23 +1,31 @@
 import { useRouter } from "next/router";
-import path from "path";
 import DatePicker from "../../components/atoms/DatePicker";
 import CitiesTab from "../../components/molecules/CitiesTab";
-import { getAllCities } from "../../utils/getAllCities";
+import CityData from "../../components/molecules/CityData";
+import Layout from "../../components/templates/Layout";
 import { getCityData } from "../../utils/getCityData";
 
-const City = ({ citiesData }: any) => {
+const City = ({ cityData }: any) => {
   const router = useRouter();
   const { city } = router.query;
-  console.log({ citiesData });
-
-  return <div><CitiesTab /><DatePicker /></div>;
+  return (
+    <Layout
+      hasInformationalAlert={false}
+      className="justify-start"
+      metaData={{ title: "city" }}
+    >
+      <CitiesTab />
+      <DatePicker />
+      <CityData {...cityData} />
+    </Layout>
+  );
 };
 
 export const getServerSideProps = async (ctx: any) => {
-  const citiesData = await getCityData(ctx.query.city, ctx.query.date);
+  const cityData = await getCityData(ctx.query.city);
   return {
     props: {
-      citiesData,
+      cityData,
     },
   };
 };
