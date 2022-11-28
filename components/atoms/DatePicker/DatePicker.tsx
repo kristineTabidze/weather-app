@@ -2,27 +2,28 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import {
-  changeCity
-} from "../../../store/currentCity/currentCitySlice";
+import { changeCity } from "../../../store/currentCity/currentCitySlice";
 import {
   changeDate,
-  selectCurrentDate
+  selectCurrentDate,
 } from "../../../store/currentDate/currentDateSlice";
+import Modal from "../Modal";
 
-function getPreviousDay(date = new Date(), i: number) {
+const getPreviousDay = (date = new Date(), i: number) => {
   const previous = new Date(date.getTime());
   previous.setDate(date.getDate() - i);
 
   return previous;
-}
+};
 
 const CustomDatePicker: React.FC = ({}) => {
   const dispatch = useAppDispatch();
   const currentDate = useAppSelector(selectCurrentDate);
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = useCallback(
     async (_: any, dateStr: string) => {
@@ -41,8 +42,11 @@ const CustomDatePicker: React.FC = ({}) => {
           )
           .then((data) => {
             return { info: data.data, date: time };
-          });
-        cityData.push(curCity);
+          })
+          .catch((err) => {setErrorMsg("error"); setIsModalOpen(true);});
+        if (typeof curCity === "object") {
+          cityData.push(curCity);
+        }
       }
       dispatch(changeCity({ currentCity: cityData }));
     },
@@ -50,7 +54,16 @@ const CustomDatePicker: React.FC = ({}) => {
   );
 
   return (
-    <DatePicker onChange={onChange} picker="date" value={dayjs(currentDate)} />
+    <>
+      <DatePicker
+        onChange={onChange}
+        picker="date"
+        value={dayjs(currentDate)}
+      />
+      <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
+        {errorMsg}
+      </Modal>
+    </>
   );
 };
 
