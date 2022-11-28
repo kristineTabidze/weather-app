@@ -17,8 +17,10 @@ const store = () =>
     devTools: true,
   });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+type Store = ReturnType<typeof store>;
+
+export type AppDispatch = Store["dispatch"];
+export type RootState = ReturnType<Store["getState"]>;
 export type AppThunk<ReturnType = void> = ThunkAction<
    ReturnType,
    RootState,

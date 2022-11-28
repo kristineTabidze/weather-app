@@ -12,8 +12,8 @@ const CustomDatePicker: React.FC = ({}) => {
     const router = useRouter();
     
     const onChange = useCallback(
-      (_, dateStr: string) => {
-        router.query.date = currentDate;
+      (_: any, dateStr: string) => {
+        router.query.date = currentDate + '';
         router.push(router);
         dispatch(changeDate({ date: new Date(dateStr).getTime() }));
       },
