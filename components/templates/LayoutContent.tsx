@@ -5,7 +5,6 @@ import Header from "../organisms/Header";
 import MetaData from "./MetaData";
 import { LayoutProps } from "./types";
 
-
 const MESSAGE_TEXT = "This is code challenge";
 
 const LayoutContent = ({

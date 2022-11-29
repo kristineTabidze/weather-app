@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col items-center w-full p-16 border-t-1 border-solid border-gray-1">
+    <footer className="flex flex-col items-center w-full p-4 border-t-1 border-solid border-gray-1">
       <a
         href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
         target="_blank"

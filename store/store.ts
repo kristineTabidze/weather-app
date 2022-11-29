@@ -5,14 +5,12 @@ import {
 
 import { createWrapper } from "next-redux-wrapper";
 import currentCityReducer from './currentCity/currentCitySlice';
-import currentDateReducer from './currentDate/currentDateSlice';
 
 
 const store = () =>
   configureStore({
     reducer: {
       currentCity: currentCityReducer,
-      currentDate: currentDateReducer,
     },
     devTools: true,
   });

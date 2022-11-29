@@ -2,19 +2,16 @@ import { Typography } from "antd";
 
 const HomePage = () => {
   return (
-    <div>
-      <Typography.Title level={2}>The Coding Challenge</Typography.Title>
-
+    <div className="flex flex-col justify-center text-center grow">
+      <Typography.Title level={2}>
+        Weather App Coding Challenge
+      </Typography.Title>
       <Typography.Paragraph>
-        Please build Weather App:
+        To Navigate through the app, please use the links in the header
       </Typography.Paragraph>
-
-     
-
-      {/* <Typography.Paragraph className="pt-16">
-        Please save all the data into a JSON file downloaded once the
-        registration is submitted.
-      </Typography.Paragraph> */}
+      <Typography.Paragraph>
+        Choose City button and you will be redirect to the main page, where you can select the city, date and see the weather data
+      </Typography.Paragraph>
     </div>
   );
 };

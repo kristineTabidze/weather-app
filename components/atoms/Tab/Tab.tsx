@@ -9,7 +9,7 @@ const Tab: React.FC<ITab> = ({ title, isActive = false, onClick, href }) => {
       href={href}
       onClick={onClick}
       className={classnames(
-        "py-2 px-3 text-base inline-block cursor-pointer",
+        "py-2 px-3 text-base inline-block cursor-pointer rounded-t-lg",
         isActive ? "bg-primary text-white-0" : "bg-transparent text-primary"
       )}
     >

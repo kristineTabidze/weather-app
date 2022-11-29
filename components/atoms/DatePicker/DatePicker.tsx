@@ -1,56 +1,32 @@
 import { DatePicker } from "antd";
-import axios from "axios";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import React, { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks";
 import { changeCity } from "../../../store/currentCity/currentCitySlice";
-import {
-  changeDate,
-  selectCurrentDate,
-} from "../../../store/currentDate/currentDateSlice";
 import Modal from "../Modal";
+import { getLastFiveDaysForecast } from "./utils";
 
-const getPreviousDay = (date = new Date(), i: number) => {
-  const previous = new Date(date.getTime());
-  previous.setDate(date.getDate() - i);
-
-  return previous;
-};
-
-const CustomDatePicker: React.FC = ({}) => {
+const CustomDatePicker: React.FC = () => {
   const dispatch = useAppDispatch();
-  const currentDate = useAppSelector(selectCurrentDate);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = useCallback(
-    async (_: any, dateStr: string) => {
-      router.query.date = currentDate + "";
-      router.push(router);
-      dispatch(changeDate({ date: new Date(dateStr).getTime() }));
-      const cityData = [];
-      for (let i = 0; i < 5; i++) {
-        const date = getPreviousDay(new Date(dateStr), i);
-        const time = date.getTime();
-        const curCity = await axios
-          .get(
-            `https://api.openweathermap.org/data/2.5/weather?q=${
-              router.query.city
-            }&appid=${"145ede488f953e51d872e1320abb42f5"}&date=${time}&units=metric`
-          )
-          .then((data) => {
-            return { info: data.data, date: time };
-          })
-          .catch((err) => {setErrorMsg("error"); setIsModalOpen(true);});
-        if (typeof curCity === "object") {
-          cityData.push(curCity);
-        }
+    async (_: dayjs.Dayjs | null, dateStr: string) => {
+      try {
+        const lastFiveDaysForecast = await getLastFiveDaysForecast(
+          router.query.city as string,
+          dateStr
+        );
+        dispatch(changeCity({ currentCity: lastFiveDaysForecast }));
+      } catch (error) {
+        setErrorMsg("Couldn't fetch data for this date");
+        setIsModalOpen(true);
       }
-      dispatch(changeCity({ currentCity: cityData }));
     },
-    [router, currentDate]
+    [router]
   );
 
   return (
@@ -58,10 +34,10 @@ const CustomDatePicker: React.FC = ({}) => {
       <DatePicker
         onChange={onChange}
         picker="date"
-        value={dayjs(currentDate)}
+        defaultValue={dayjs(new Date())}
       />
       <Modal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)}>
-        {errorMsg}
+        <div className="text-error">{errorMsg}</div>
       </Modal>
     </>
   );

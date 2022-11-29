@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import DatePicker from "../../components/atoms/DatePicker";
 import CitiesTab from "../../components/molecules/CitiesTab";
 import CityData from "../../components/molecules/CityData";
@@ -6,17 +5,25 @@ import Layout from "../../components/templates/Layout";
 import { getCityData } from "../../utils/getCityData";
 
 const City = ({ cityData }: any) => {
-  const router = useRouter();
-  const { city } = router.query;
   return (
     <Layout
       hasInformationalAlert={false}
       className="justify-start"
       metaData={{ title: "city" }}
     >
-      <CitiesTab />
-      <DatePicker />
-      <CityData {...cityData} />
+      <div>
+        <p className="flex justify-center p-8">
+          Choose desired city from the list below to see full details
+        </p>
+      </div>
+
+      <div className="m-8 rounded-lg bg-gray-1">
+        <CitiesTab />
+        <div className="text-right p-5">
+          <DatePicker />
+        </div>
+        <CityData {...cityData} />
+      </div>
     </Layout>
   );
 };

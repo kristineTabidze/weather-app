@@ -4,7 +4,7 @@ import { IModal } from "./types";
 
 const Modal: React.FC<IModal> = ({ children, isOpen, handleClose }) => {
   useEffect(() => {
-    const closeOnEscapeKey = (e) => (e.key === "Escape" ? handleClose() : null);
+    const closeOnEscapeKey = (e: KeyboardEvent) => (e.key === "Escape" ? handleClose() : null);
     document.body.addEventListener("keydown", closeOnEscapeKey);
     return () => {
       document.body.removeEventListener("keydown", closeOnEscapeKey);
@@ -17,9 +17,6 @@ const Modal: React.FC<IModal> = ({ children, isOpen, handleClose }) => {
     <ReactPortal wrapperId="react-portal-modal-container">
       <div className="modal">
         <div className="modal__content">
-          <button onClick={handleClose} className="close-btn">
-            Close
-          </button>
           {children}
         </div>
       </div>

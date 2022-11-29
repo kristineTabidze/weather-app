@@ -17,11 +17,11 @@ const Header = () => {
 
   return (
     <header className="border-b-1 border-solid border-gray-1">
-      <div className="max-w-1100 mx-auto flex w-full flex-col-reverse md:flex-row p-16 align-center">
+      <div className="max-w-1100 mx-auto flex w-full flex-col-reverse md:flex-row p-4 align-center">
         <nav className="w-full">
-          <ul className="flex w-full">
+          <ul className="flex w-full text-primary justify-center">
             {Routes.map(({ href, title, id }) => (
-                <Link href={href} className="px-16 md:px-40 text-18" key={id}>
+                <Link href={href} className="px-4 md:px-40 text-18" key={id}>
                  {title}
                 </Link>
             ))}
