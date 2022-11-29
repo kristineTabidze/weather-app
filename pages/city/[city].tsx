@@ -29,6 +29,9 @@ const City = ({ cityData }: any) => {
 };
 
 export const getServerSideProps = async (ctx: any) => {
+  const { res } = ctx;
+  res.setHeader("Cache-Control", `s-maxage=60, stale-while-revalidate`); 
+
   const cityData = await getCityData(ctx.query.city);
   return {
     props: {
