@@ -1,10 +1,4 @@
 export const CITIES = [
-    // {
-    //     city: 'New York',
-    //     query: 'new-york',
-    //     lat: 40.7128,
-    //     lon: -74.006,
-    // },
     {
         city: 'Berlin',
         query: 'berlin',

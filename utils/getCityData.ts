@@ -5,7 +5,7 @@ export const getCityData = async (city: string) => {
     .get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${
         process.env.API_KEY
-      }&date=${new Date().getTime()}&units=metric`
+      }&units=metric`
     )
     .then((data) => data.data);
 
