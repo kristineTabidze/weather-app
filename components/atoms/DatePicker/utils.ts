@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import { ICityData } from "../../molecules/CityData/types";
 
 const getWeather = async (city: string, date: Date) => {
-  const appid = process.env.NEXT_PUBLIC_OPEN_WEATHER_API_KEY;
+  const appid = "145ede488f953e51d872e1320abb42f5";
   // I'm fetching data from client side also because, there wasn't a free api, which would give historical data to fetch it with getserversideprops
   // To fetch data for five days from serverside, it would need time(approximately 5s), so dinammic routes were delayed
   // That's why I decided to get current weather data from server side and historical data from client side 
